@@ -5,22 +5,22 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Entity
 @Getter
 @Setter
-public class DailyPlan {
+public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Date date;
-    @ManyToOne
-    @JoinColumn(name = "member_id")
-    private Member member;
-    @OneToMany(mappedBy = "dailyPlan")
+    private String email;
+    private String profileUrl;
+    private String name;
+    private int planSuccessCount;
+    private int challengeSuccessCount;
+    @OneToMany(mappedBy = "member")
+    private List<DailyPlan> dailyPlanList = new ArrayList<>();
+    @OneToMany(mappedBy = "member")
     private List<Category> categoryList = new ArrayList<>();
-    @OneToMany(mappedBy = "dailyPlan")
-    private List<ToDoList> toDoLists = new ArrayList<>();
 }
