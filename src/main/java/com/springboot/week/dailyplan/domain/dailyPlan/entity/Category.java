@@ -16,8 +16,5 @@ public class Category {
     @ManyToOne
     @JoinColumn(name = "member_id)")
     private Member member;
-    @ManyToOne
-    @JoinColumn(name = "dailyplan_id)")
-    private DailyPlan dailyPlan;
     private CategoryCode categoryCode;
 }

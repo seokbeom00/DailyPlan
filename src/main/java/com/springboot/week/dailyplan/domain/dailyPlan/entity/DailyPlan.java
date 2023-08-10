@@ -19,10 +19,6 @@ public class DailyPlan {
     @ManyToOne
     @JoinColumn(name = "member_id")
     private Member member;
-
-    @OneToMany(mappedBy = "dailyPlan")
-    private List<Category> categoryList = new ArrayList<>();
-
     @OneToMany(mappedBy = "dailyPlan")
     private List<ToDoList> toDoLists = new ArrayList<>();
 }

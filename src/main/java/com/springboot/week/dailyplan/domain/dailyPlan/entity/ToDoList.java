@@ -19,4 +19,5 @@ public class ToDoList {
     @ManyToOne
     @JoinColumn(name = "dailyplan_id")
     private DailyPlan dailyPlan;
+    private CategoryCode categoryCode;
 }
