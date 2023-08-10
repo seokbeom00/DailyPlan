@@ -46,6 +46,7 @@ public class ToDoListService {
                     newCategory.addTodo(toDoList);
                     return categoryRepository.save(newCategory);
                 });
+        category.addTodo(toDoList);
         toDoList.setCategory(category);
         toDoListRepository.save(toDoList);
         return toDoList.getId();
