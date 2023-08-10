@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -15,12 +14,15 @@ public class DailyPlan {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Date date;
+    private String yearmonth;
+    private String date;
     @ManyToOne
     @JoinColumn(name = "member_id")
     private Member member;
+
     @OneToMany(mappedBy = "dailyPlan")
     private List<Category> categoryList = new ArrayList<>();
+
     @OneToMany(mappedBy = "dailyPlan")
     private List<ToDoList> toDoLists = new ArrayList<>();
 }

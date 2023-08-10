@@ -19,8 +19,10 @@ public class Member {
     private String name;
     private int planSuccessCount;
     private int challengeSuccessCount;
+
     @OneToMany(mappedBy = "member")
     private List<DailyPlan> dailyPlanList = new ArrayList<>();
+
     @OneToMany(mappedBy = "member")
     private List<Category> categoryList = new ArrayList<>();
 }

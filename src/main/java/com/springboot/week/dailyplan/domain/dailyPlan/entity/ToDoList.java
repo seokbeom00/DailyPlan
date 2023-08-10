@@ -1,5 +1,6 @@
 package com.springboot.week.dailyplan.domain.dailyPlan.entity;
 
+import com.springboot.week.dailyplan.domain.dailyPlan.entity.DailyPlan;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,5 +19,4 @@ public class ToDoList {
     @ManyToOne
     @JoinColumn(name = "dailyplan_id")
     private DailyPlan dailyPlan;
-    private String comment;
 }

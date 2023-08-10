@@ -1,5 +1,7 @@
 package com.springboot.week.dailyplan.domain.dailyPlan.entity;
 
+import com.springboot.week.dailyplan.domain.dailyPlan.entity.DailyPlan;
+import com.springboot.week.dailyplan.domain.dailyPlan.entity.Member;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
