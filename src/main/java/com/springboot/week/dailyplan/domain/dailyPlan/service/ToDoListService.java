@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -30,7 +31,6 @@ public class ToDoListService {
         toDoList.setDailyPlan(dailyPlan);
         boolean isValidCategoryCode = Arrays.stream(CategoryCode.values())
                 .anyMatch(enumValue -> enumValue == toDoRequestDto.getCategoryCode());
-        System.out.println(isValidCategoryCode);
         if (!isValidCategoryCode) {
             throw new EntityNotFoundException(ErrorCode.Category_NOT_FOUND,
                     "존재하지 않는 카테고리입니다.");
@@ -49,5 +49,15 @@ public class ToDoListService {
         toDoList.setCategory(category);
         toDoListRepository.save(toDoList);
         return toDoList.getId();
+    }
+
+    public boolean updateTodo(Long todoId, ToDoUpdateDto toDoUpdateDto) {
+        boolean isValidCategoryCode = Arrays.stream(CategoryCode.values())
+                .anyMatch(enumValue -> Objects.equals(enumValue.toString(), toDoUpdateDto.getAfterCategoryCode()));
+        if (!isValidCategoryCode) {
+            throw new EntityNotFoundException(ErrorCode.Category_NOT_FOUND,
+                    "존재하지 않는 카테고리입니다.");
+        }
+
     }
 }
