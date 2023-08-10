@@ -19,5 +19,7 @@ public class ToDoList {
     @ManyToOne
     @JoinColumn(name = "dailyplan_id")
     private DailyPlan dailyPlan;
-    private CategoryCode categoryCode;
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
 }
