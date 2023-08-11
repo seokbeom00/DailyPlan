@@ -16,14 +16,27 @@ public class Category {
     private Long id;
     private int successToDoCount = 0;
     private int countByToDo = 0;
+
     @ManyToOne
     @JoinColumn(name = "member_id)")
     private Member member;
+
     private CategoryCode categoryCode;
+
     @OneToMany(mappedBy = "category")
     private List<ToDoList> toDoLists = new ArrayList<>();
 
     public void addTodo(ToDoList toDoList){
         toDoLists.add(toDoList);
+        countByToDo++;
+    }
+    public void subTodo(){
+        countByToDo--;
+    }
+    public void addSuccess(){
+        successToDoCount++;
+    }
+    public void subSuccess(){
+        successToDoCount--;
     }
 }

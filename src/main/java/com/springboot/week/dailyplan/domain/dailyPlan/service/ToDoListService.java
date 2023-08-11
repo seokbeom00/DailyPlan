@@ -101,6 +101,7 @@ public class ToDoListService {
                 .orElseThrow(()-> new EntityNotFoundException(ErrorCode.TODOLIST_NOT_FOUND,
                         "해당 Id에 해당하는 투두리스트가 없습니다 : "+todoId));
         toDoListRepository.delete(toDoList);
+        toDoList.getCategory().subTodo();
         return true;
     }
     @Transactional
@@ -128,6 +129,7 @@ public class ToDoListService {
                 .orElseThrow(()-> new EntityNotFoundException(ErrorCode.TODOLIST_NOT_FOUND,
                         "해당 Id에 해당하는 투두리스트가 없습니다 : "+todoId));
         toDoList.setComplete(true);
+        toDoList.getCategory().addSuccess();
         return true;
     }
     @Transactional
@@ -136,6 +138,7 @@ public class ToDoListService {
                 .orElseThrow(()-> new EntityNotFoundException(ErrorCode.TODOLIST_NOT_FOUND,
                         "해당 Id에 해당하는 투두리스트가 없습니다 : "+todoId));
         toDoList.setComplete(false);
+        toDoList.getCategory().subSuccess();
         return true;
     }
 }
