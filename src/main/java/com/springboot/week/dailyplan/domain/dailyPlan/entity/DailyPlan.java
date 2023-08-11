@@ -21,4 +21,7 @@ public class DailyPlan {
     private Member member;
     @OneToMany(mappedBy = "dailyPlan")
     private List<ToDoList> toDoLists = new ArrayList<>();
+    public void addTodo(ToDoList toDoList){
+        toDoLists.add(toDoList);
+    }
 }

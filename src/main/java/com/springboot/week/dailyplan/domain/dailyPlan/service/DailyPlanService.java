@@ -33,6 +33,7 @@ public class DailyPlanService {
                 .orElseThrow(()->new EntityNotFoundException(ErrorCode.MEMBER_NOT_FOUND,
                         "해당 id의 유저가 없습니다. id: " + id));
         dailyPlan.setMember(member);
+        member.addDailyPlan(dailyPlan);
         return date;
     }
 

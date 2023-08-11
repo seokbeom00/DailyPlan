@@ -25,4 +25,10 @@ public class Member {
 
     @OneToMany(mappedBy = "member")
     private List<Category> categoryList = new ArrayList<>();
+    public void addDailyPlan(DailyPlan dailyPlan){
+        dailyPlanList.add(dailyPlan);
+    }
+    public void addCategory(Category category){
+        categoryList.add(category);
+    }
 }

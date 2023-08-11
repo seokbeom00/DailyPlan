@@ -1,5 +1,7 @@
 package com.springboot.week.dailyplan.domain.dailyPlan.entity;
 
+import com.springboot.week.dailyplan.global.error.ErrorCode;
+import com.springboot.week.dailyplan.global.error.exception.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -19,4 +21,18 @@ public enum CategoryCode {
 
     private final String title;
     private final String code;
+
+    public static CategoryCode findByCode(String code){
+        CategoryCode categoryCode;
+        switch (code){
+            case "C001" : return DAILY;
+            case "C002" : return WORK_AND_STUDY;
+            case "C003" : return MEETINGS_AND_APPOINTMENTS;
+            case "C004" : return HEALTH_AND_EXERCISE;
+            case "C005" : return LEISURE_AND_ENTERTAINMENT;
+            case "C006" : return MANAGE_FINANCES;
+            case "C007" : return OTHERS;
+        }
+        throw new EntityNotFoundException(ErrorCode.Category_NOT_FOUND, code + "는 존재하지 않는 카테고리입니다");
+    }
 }

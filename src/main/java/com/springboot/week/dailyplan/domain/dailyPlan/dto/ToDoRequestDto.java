@@ -13,5 +13,5 @@ public class ToDoRequestDto {
     private String title;
     private String alarmStartTime;
     private String alarmEndTime;
-    private CategoryCode categoryCode;
+    private String categoryCode;
 }
