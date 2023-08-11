@@ -12,6 +12,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -68,7 +69,7 @@ public class ToDoListService {
             Category beforecategory = haveCategory.get();
             beforecategory.setCategoryCode(cate);
             toDoList.setCategory(beforecategory);
-            
+
             toDoList.setTitle(toDoUpdateDto.getTitle());
             toDoList.setAlarmStartTime(toDoUpdateDto.getAlarmStartTime());
             toDoList.setAlarmEndTime(toDoUpdateDto.getAlarmEndTime());
@@ -78,6 +79,63 @@ public class ToDoListService {
                     "해당 유저"+toDoUpdateDto.getMemberId()+"는 "+toDoUpdateDto.getBeforeCategoryCode()+
                             "에 해당하는 카테고리를 가지고 있지 않습니다.");
         }
+        return true;
+    }
+    @Transactional
+    public TodoResponseDto getTodo(Long todoId) {
+        ToDoList toDoList = toDoListRepository.findById(todoId)
+                .orElseThrow(()-> new EntityNotFoundException(ErrorCode.TODOLIST_NOT_FOUND,
+                        "해당 Id에 해당하는 투두리스트가 없습니다 : "+todoId));
+        TodoResponseDto todoResponseDto = new TodoResponseDto();
+        todoResponseDto.setId(toDoList.getId());
+        todoResponseDto.setAlarmStartTime(toDoList.getAlarmStartTime());
+        todoResponseDto.setAlarmEndTime(toDoList.getAlarmEndTime());
+        todoResponseDto.setComplete(toDoList.isComplete());
+        todoResponseDto.setTitle(toDoList.getTitle());
+        todoResponseDto.setCategoryCode(toDoList.getCategory().getCategoryCode().toString());
+        return todoResponseDto;
+    }
+    @Transactional
+    public boolean deleteTodo(Long todoId) {
+        ToDoList toDoList = toDoListRepository.findById(todoId)
+                .orElseThrow(()-> new EntityNotFoundException(ErrorCode.TODOLIST_NOT_FOUND,
+                        "해당 Id에 해당하는 투두리스트가 없습니다 : "+todoId));
+        toDoListRepository.delete(toDoList);
+        return true;
+    }
+    @Transactional
+    public List<TodoResponseDto> getListTodo(Long dailyplanId) {
+        DailyPlan dailyPlan = dailyPlanRepository.findById(dailyplanId)
+                .orElseThrow(() -> new EntityNotFoundException(ErrorCode.DAILYPLAN_NOT_FOUND,
+                        "해당하는 id의 데일리 플랜이 없습니다. id: "+ dailyplanId));
+        List<ToDoList> toDoLists = dailyPlan.getToDoLists();
+        return toDoLists.stream()
+                .map(toDoList -> {
+                    TodoResponseDto dto = new TodoResponseDto();
+                    dto.setId(toDoList.getId());
+                    dto.setComplete(toDoList.isComplete());
+                    dto.setTitle(toDoList.getTitle());
+                    dto.setAlarmStartTime(toDoList.getAlarmStartTime());
+                    dto.setAlarmEndTime(toDoList.getAlarmEndTime());
+                    dto.setCategoryCode(toDoList.getCategory().getCategoryCode().toString());
+                    return dto;
+                })
+                .collect(Collectors.toList());
+    }
+    @Transactional
+    public boolean completeTodo(Long todoId) {
+        ToDoList toDoList = toDoListRepository.findById(todoId)
+                .orElseThrow(()-> new EntityNotFoundException(ErrorCode.TODOLIST_NOT_FOUND,
+                        "해당 Id에 해당하는 투두리스트가 없습니다 : "+todoId));
+        toDoList.setComplete(true);
+        return true;
+    }
+    @Transactional
+    public boolean failTodo(Long todoId) {
+        ToDoList toDoList = toDoListRepository.findById(todoId)
+                .orElseThrow(()-> new EntityNotFoundException(ErrorCode.TODOLIST_NOT_FOUND,
+                        "해당 Id에 해당하는 투두리스트가 없습니다 : "+todoId));
+        toDoList.setComplete(false);
         return true;
     }
 }

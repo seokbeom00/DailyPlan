@@ -27,7 +27,9 @@ public enum ResultCode {
     GET_TODOLIST_SUCCESS(200, "T002", "투두리스트를 조회했습니다"),
     DELETE_TODOLIST_SUCCESS(200, "T003", "투두리스트를 삭제하였습니다"),
     GET_TODOLIST_ALL_SUCCESS(200, "T004", "해당 데일리 플랜의 모든 투두리스트를 조회했습니다"),
-    UPDATE_TODOLIST_SUCCESS(200, "T005", "투두리스트 업데이트 했습니다")
+    UPDATE_TODOLIST_SUCCESS(200, "T005", "투두리스트 업데이트 했습니다"),
+    COMPLETE_TODOLIST_SUCCESS(200, "T006", "해당 투두리스트를 성공했습니다."),
+    FAIL_TODOLIST_SUCCESS(200, "T007", "해당 투두리스트를 실패앴습니다.")
     ;
 
     private final int status;
