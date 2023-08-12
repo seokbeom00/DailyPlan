@@ -7,10 +7,7 @@ import com.springboot.week.dailyplan.global.result.ResultCode;
 import com.springboot.week.dailyplan.global.result.ResultResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -21,5 +18,15 @@ public class MemberController {
     public ResponseEntity<ResultResponse> join(@RequestBody JoinRequestDto joinRequestDto){
         MemberResponseDto memberResponseDto = memberService.join(joinRequestDto);
         return ResponseEntity.ok(ResultResponse.of(ResultCode.MEMBER_SAVE_OR_UPDATE_SUCCESS, memberResponseDto));
+    }
+    @GetMapping("/{member_id}")
+    public ResponseEntity<ResultResponse> get(@PathVariable Long member_id){
+        MemberResponseDto memberResponseDto = memberService.get(member_id);
+        return ResponseEntity.ok(ResultResponse.of(ResultCode.GET_USERPROFILE_SUCCESS, memberResponseDto));
+    }
+    @GetMapping("/email/{email}")
+    public ResponseEntity<ResultResponse> getByEmail(@PathVariable String email){
+        MemberResponseDto memberResponseDto = memberService.getByEmail(email);
+        return ResponseEntity.ok(ResultResponse.of(ResultCode.GET_USERPROFILE_SUCCESS, memberResponseDto));
     }
 }

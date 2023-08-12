@@ -130,6 +130,11 @@ public class ToDoListService {
                         "해당 Id에 해당하는 투두리스트가 없습니다 : "+todoId));
         toDoList.setComplete(true);
         toDoList.getCategory().addSuccess();
+        Member member = memberRepository.findById(toDoList.getDailyPlan().getMember().getId())
+                .orElseThrow(()-> new EntityNotFoundException(ErrorCode.MEMBER_NOT_FOUND,
+                        "해당 투두리스트에 해당하는 멤버가 없습니다 "));
+        member.addPlan();
+        member.addChallenge();
         return true;
     }
     @Transactional

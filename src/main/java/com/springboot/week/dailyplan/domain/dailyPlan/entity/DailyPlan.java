@@ -19,7 +19,7 @@ public class DailyPlan {
     @ManyToOne
     @JoinColumn(name = "member_id")
     private Member member;
-    @OneToMany(mappedBy = "dailyPlan")
+    @OneToMany(mappedBy = "dailyPlan", cascade = CascadeType.REMOVE)
     private List<ToDoList> toDoLists = new ArrayList<>();
     public void addTodo(ToDoList toDoList){
         toDoLists.add(toDoList);

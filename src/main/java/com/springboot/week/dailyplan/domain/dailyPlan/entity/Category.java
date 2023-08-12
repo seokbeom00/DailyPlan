@@ -23,7 +23,7 @@ public class Category {
 
     private CategoryCode categoryCode;
 
-    @OneToMany(mappedBy = "category")
+    @OneToMany(mappedBy = "category", cascade = CascadeType.REMOVE)
     private List<ToDoList> toDoLists = new ArrayList<>();
 
     public void addTodo(ToDoList toDoList){

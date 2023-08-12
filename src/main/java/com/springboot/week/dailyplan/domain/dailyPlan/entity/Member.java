@@ -20,15 +20,21 @@ public class Member {
     private int planSuccessCount;
     private int challengeSuccessCount;
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
     private List<DailyPlan> dailyPlanList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
     private List<Category> categoryList = new ArrayList<>();
     public void addDailyPlan(DailyPlan dailyPlan){
         dailyPlanList.add(dailyPlan);
     }
     public void addCategory(Category category){
         categoryList.add(category);
+    }
+    public void addPlan(){
+        this.planSuccessCount++;
+    }
+    public void addChallenge(){
+        this.challengeSuccessCount++;
     }
 }
