@@ -32,4 +32,10 @@ public class DailyPlanController {
         boolean data = dailyPlanService.deletePlan(dailyPlanId);
         return ResponseEntity.ok(ResultResponse.of(ResultCode.DELETE_DAILPLAN_SUCCESS, data));
     }
+    @GetMapping("/{member_id}/{month}")
+    public  ResponseEntity<ResultResponse> getMonthPlan(@RequestParam Long member_id
+            ,@RequestParam String month){
+        List<DailyPlanResponseDto> data = dailyPlanService.getMonthPlan(member_id, month);
+        return ResponseEntity.ok(ResultResponse.of(ResultCode.GET_MONTH_DAILYPLAN_SUCCESS, data));
+    }
 }

@@ -11,7 +11,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -55,5 +57,29 @@ public class DailyPlanService {
                         "해당하는 id의 데일리 플랜이 없습니다. id: "+ dailyPlanId));
         dailyPlanRepository.delete(dailyPlan);
         return true;
+    }
+
+    public List<DailyPlanResponseDto> getMonthPlan(Long memberId, String month) {
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(()->new EntityNotFoundException(ErrorCode.MEMBER_NOT_FOUND,
+                        "해당 id의 유저가 없습니다. id: " + memberId));
+        List<DailyPlan> dailyPlans = member.getDailyPlanList();
+        String finalMonth;
+        if(month.length() == 1){
+            finalMonth = "0" + month;
+        } else {
+            finalMonth = month;
+        }
+        return dailyPlans.stream()
+                .filter(dailyPlan -> dailyPlan.getYearmonth().endsWith(finalMonth))
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+    }
+    private DailyPlanResponseDto convertToDto(DailyPlan dailyPlan) {
+        return DailyPlanResponseDto.builder()
+                .yearmonth(dailyPlan.getYearmonth())
+                .date(dailyPlan.getDate())
+                .toDoLists(new ArrayList<>(dailyPlan.getToDoLists())) // creating a new list to ensure immutability
+                .build();
     }
 }
